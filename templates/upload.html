@@ -1,118 +1,256 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>HackElite.AI - Test Report Generation & Tell No/NoGo</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>HackElite.AI - Go/No-Go Test Report</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"/>
   <style>
+    :root {
+      --bg-black: #121212;
+      --card-bg: #1A1A1A;
+      --text-light: #EDEDED;
+      --border-dark: #2E2E2E;
+
+      --pink-accent: #FF6584;
+      --orange-light: #FFA662;
+
+      --font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
     body {
+      margin: 0;
+      background-color: var(--bg-black);
+      color: var(--text-light);
+      font-family: var(--font-family);
       min-height: 100vh;
       display: flex;
       flex-direction: column;
-      background: linear-gradient(135deg, #e2eafc 0%, #f8fafc 100%);
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     }
-    .navbar {
-      background-color: #212529;
+
+    nav.navbar {
+      background-color: var(--card-bg);
+      padding: 1rem 2rem;
+      border-bottom: 1px solid var(--border-dark);
     }
+
     .navbar-brand {
+      color: var(--pink-accent);
       font-weight: 700;
-      font-size: 1.5rem;
-      color: #ffffff;
+      font-size: 1.6rem;
+      display: flex;
+      align-items: center;
+      text-decoration: none;
+      letter-spacing: 0.04em;
     }
+
     .navbar-brand img {
-      height: 36px;
+      height: 32px;
       margin-right: 10px;
       border-radius: 6px;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+      box-shadow: 0 0 8px var(--pink-accent);
     }
+
     main {
-      flex: 1 0 auto;
+      flex-grow: 1;
       display: flex;
       justify-content: center;
-      align-items: center;
-      padding: 40px 15px;
+      align-items: flex-start;
+      padding: 3rem 1rem;
     }
+
     .upload-card {
-      background: white;
-      padding: 30px 25px;
-      border-radius: 12px;
-      box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+      background-color: var(--card-bg);
+      border-radius: 14px;
+      padding: 2.5rem 2rem;
+      max-width: 520px;
       width: 100%;
-      max-width: 480px;
+      border: 1px solid var(--border-dark);
       text-align: center;
     }
+
     .upload-card h1 {
-      margin-bottom: 20px;
-      font-size: 2.25rem;
-      color: #212529;
+      font-weight: 700;
+      font-size: 2rem;
+      margin-bottom: 2rem;
+      color: var(--pink-accent);
+      letter-spacing: 0.03em;
     }
-    .form-label {
+
+    label.form-label {
+      display: block;
       font-weight: 600;
+      margin-bottom: 0.5rem;
+      text-align: left;
+      color: var(--text-light);
+      font-size: 1rem;
     }
-    .btn-upload {
-      background-color: yellow;
-      border: none;
-      padding: 12px 28px;
-      font-size: 1.1rem;
+
+    input.form-control {
+      width: 100%;
+      padding: 12px 14px;
+      font-size: 1rem;
+      background-color: #2A2A2A;
+      border: 1.5px solid var(--border-dark);
       border-radius: 8px;
+      color: var(--text-light);
+      transition: border-color 0.3s ease;
+    }
+
+    input.form-control:focus {
+      border-color: var(--orange-light);
+      outline: none;
+      background-color: #2A2A2A;
+    }
+
+    button.btn-upload {
+      margin-top: 2rem;
+      width: 100%;
+      padding: 14px 0;
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: #1A1A1A;
+      background-color: var(--orange-light);
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
       transition: background-color 0.3s ease;
     }
-    .btn-upload:hover {
-      background-color: #383838;
+
+    button.btn-upload:hover,
+    button.btn-upload:focus {
+      background-color: #ffb46e;
+      outline: none;
     }
+
     footer {
-      flex-shrink: 0;
-      background-color: #212529;
-      color: #bbb;
+      background-color: var(--card-bg);
+      color: var(--text-light);
       text-align: center;
-      padding: 15px 0;
+      padding: 1rem 0;
       font-size: 0.9rem;
+      font-weight: 500;
+      letter-spacing: 0.02em;
     }
+
     .alert {
-      margin-top: 1.25rem;
+      margin-top: 1.5rem;
+      padding: 14px 20px;
+      border-radius: 10px;
+      background-color: #3b1a2f;
+      color: white;
+      text-align: left;
+      max-width: 520px;
+      margin-left: auto;
+      margin-right: auto;
+      font-weight: 600;
+      border-left: 6px solid var(--pink-accent);
+    }
+
+    h4 {
+      margin-top: 2.5rem;
+      text-align: left;
+      color: var(--pink-accent);
+      font-weight: 700;
+      font-size: 1.3rem;
+      letter-spacing: 0.02em;
+      max-width: 520px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .table-responsive {
+      max-width: 520px;
+      margin: 1rem auto 0 auto;
+      border-radius: 12px;
+      overflow-x: auto;
+      border: 1px solid var(--border-dark);
+      background-color: #2A2A2A;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.95rem;
+      color: var(--text-light);
+    }
+
+    th, td {
+      padding: 12px 16px;
+      border-bottom: 1px solid var(--border-dark);
+      text-align: left;
+      vertical-align: middle;
+    }
+
+    th {
+      background-color: var(--pink-accent);
+      color: #1A1A1A;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    /* Status badges */
+    .badge-success {
+      background-color: #99f6e4;
+      color: #1a1a1a;
+      padding: 6px 16px;
+      border-radius: 20px;
+      font-weight: 600;
+      display: inline-block;
+      min-width: 80px;
+      text-align: center;
+    }
+    .badge-warning {
+      background-color: var(--orange-light);
+      color: #1a1a1a;
+      padding: 6px 16px;
+      border-radius: 20px;
+      font-weight: 600;
+      text-align: center;
+      min-width: 80px;
+      display: inline-block;
+    }
+    .badge-error {
+      background-color: #fda4af;
+      color: #1a1a1a;
+      padding: 6px 16px;
+      border-radius: 20px;
+      font-weight: 600;
+      min-width: 80px;
+      display: inline-block;
+      text-align: center;
     }
   </style>
 </head>
 <body>
-
   <nav class="navbar">
-    <div class="container">
-      <a class="navbar-brand d-flex align-items-center" href="#">
-        <img src="C:\Users\sreel\Desktop\logo" alt="HackElite.AI Logo" />
-        HackElite.AI
-      </a>
-    </div>
+    <a href="#" class="navbar-brand d-flex align-items-center">
+<!--      <img src="C:\Users\sreel\Desktop\logo" alt="HackElite.AI Logo"/>-->
+      HackElite.AI - Go/No-Go Test Report
+    </a>
   </nav>
-
   <main>
     <div class="upload-card">
-      <h1>HackElite.AI - Test Report Generation</h1>
+      <h1>Upload Test Report</h1>
       <form method="POST" enctype="multipart/form-data">
-        <div class="mb-3 text-start">
-          <label for="fileInput" class="form-label">Select CSV File</label>
-          <input class="form-control" type="file" id="fileInput" name="file" required />
-        </div>
-        <button type="submit" class="btn btn-upload w-100">Upload &#8593;</button>
+        <label for="fileInput" class="form-label">Select Excel File</label>
+        <input class="form-control" type="file" id="fileInput" name="file" required/>
+        <button type="submit" class="btn btn-upload">Generate Report</button>
       </form>
       {% if message %}
-        <div class="alert alert-info" role="alert">
-          {{ message }}
-        </div>
+      <div class="alert" role="alert">{{ message }}</div>
       {% endif %}
-     {% if table_html %}
-       <h4>Analysis Result:</h4>
-       <div class="table-responsive">
-          {{ table_html | safe }}
-       </div>
+      {% if table_html %}
+      <h4>Analysis Result</h4>
+      <div class="table-responsive">
+        {{ table_html | safe }}
+      </div>
       {% endif %}
     </div>
   </main>
-
   <footer>
     &copy; 2025 HackElite.AI | All rights reserved
   </footer>
-
 </body>
 </html>

@@ -15,7 +15,7 @@ def upload_and_analyze():
             try:
                 df = pd.read_excel(file)
                 print(df)
-                message = f"File '{file.filename}' uploaded successfully!"
+                message = f"{file.filename} uploaded successfully!"
                 total_scenarios = len(df)
                 print(total_scenarios)
                 critical_df = df[df['Criticality'].str.lower() == 'critical']
